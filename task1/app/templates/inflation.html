@@ -17,7 +17,9 @@
       <div class="row">
         <h1 class="col s12">Инфляция в России</h1>
         <div class="col s12 m8">
-        
+        {%for el in infl_list%}
+          <p>{{el}}</p>
+         {%endfor%}
         <!-- Ваша логика -->
 
         </div>
