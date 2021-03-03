@@ -1,3 +1,4 @@
+{% load my_filters %}
 <!DOCTYPE html>{% load static %}
 <html>
   <head>
@@ -17,11 +18,32 @@
       <div class="row">
         <h1 class="col s12">Инфляция в России</h1>
         <div class="col s12 m8">
-        {%for el in infl_list%}
-          <p>{{el}}</p>
-         {%endfor%}
-        <!-- Ваша логика -->
-
+        <table>
+          {% for elem in infl_list.0 %}
+            <td>{{elem}}</td>
+          {%endfor%}
+          <tr></tr>
+          {% for elem in infl_list|slice:"1:" %}
+            <td >{{elem|first}}</td>
+            {% for el in elem|slice:"1:13" %}
+              {% if el|numb > 1 and el|numb < 2 %}
+                <td style="background-color:#FFC0CB">{{el}}</td>
+              {% elif el|numb > 2 and el|numb < 5 %}
+                <td style="background-color:#FA8072">{{el}}</td>
+              {% elif el|numb > 5 %}
+                <td style="background-color:#FF0000">{{el}}</td>
+              {% elif el|numb < 0 %}
+                <td style="background-color:#008000">{{el}}</td>
+              {% elif el == "" %}
+                <td>{{empty}}</td>
+              {% else %}
+                <td>{{el}}</td>
+              {%endif%}
+            {% endfor %}
+            <td style="background-color:#808080">{{elem|last}}</td>
+            <tr></tr>
+          {% endfor %}
+          </table>>
         </div>
       </div>
     {% endblock %}
